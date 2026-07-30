@@ -1332,3 +1332,35 @@ exports.handler = async (event) => {
         };
     }
 };
+
+// Render (and local testing) Server Wrapper
+if (require.main === module) {
+    const express = require('express');
+    const app = express();
+    app.use(express.json());
+
+    app.all('*', async (req, res) => {
+        const event = {
+            httpMethod: req.method,
+            path: req.path,
+            headers: req.headers,
+            body: req.body ? (Object.keys(req.body).length > 0 ? JSON.stringify(req.body) : null) : null,
+        };
+
+        try {
+            const result = await exports.handler(event);
+            if (result.headers) {
+                res.set(result.headers);
+            }
+            res.status(result.statusCode || 200).send(result.body);
+        } catch (err) {
+            console.error("Express Wrapper Error:", err);
+            res.status(500).send(JSON.stringify({ success: false, message: 'Internal Server Error' }));
+        }
+    });
+
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => {
+        console.log(`Server is running on port ${port}`);
+    });
+}
