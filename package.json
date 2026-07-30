@@ -4,6 +4,7 @@
   "description": "AWS Lambda backend for SalesPro shop registration",
   "main": "index.js",
   "dependencies": {
+    "cors": "^2.8.6",
     "express": "^4.19.2",
     "mysql2": "^3.9.2"
   }

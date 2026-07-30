@@ -1336,7 +1336,9 @@ exports.handler = async (event) => {
 // Render (and local testing) Server Wrapper
 if (require.main === module) {
     const express = require('express');
+    const cors = require('cors');
     const app = express();
+    app.use(cors());
     app.use(express.json());
 
     app.all('*', async (req, res) => {
