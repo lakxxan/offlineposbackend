@@ -1,0 +1,9 @@
+{
+  "name": "salespro-backend-lambda",
+  "version": "1.0.0",
+  "description": "AWS Lambda backend for SalesPro shop registration",
+  "main": "index.js",
+  "dependencies": {
+    "mysql2": "^3.9.2"
+  }
+}
